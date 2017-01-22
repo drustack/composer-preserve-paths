@@ -2,20 +2,17 @@
 
 /**
  * @file
- * Contains derhasi\Composer\Plugin.
+ * Contains DruStack\Composer\PreservePaths\PluginWrapper.
  */
 
-namespace derhasi\Composer;
+namespace DruStack\Composer\PreservePaths;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\InstallOperation;
 use Composer\DependencyResolver\Operation\UninstallOperation;
 use Composer\DependencyResolver\Operation\UpdateOperation;
-use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
-use Composer\Plugin\PluginInterface;
 use Composer\Installer\PackageEvent;
-use Composer\Script\ScriptEvents;
 use Composer\Util\Filesystem;
 
 /**
@@ -23,7 +20,6 @@ use Composer\Util\Filesystem;
  */
 class PluginWrapper
 {
-
     /**
      * @var \Composer\IO\IOInterface
      */
@@ -40,7 +36,7 @@ class PluginWrapper
     protected $filesystem;
 
     /**
-     * @var \derhasi\Composer\PathPreserver[string]
+     * @var \DruStack\Composer\PreservePaths\PathPreserver[string]
      */
     protected $preservers;
 
@@ -61,7 +57,6 @@ class PluginWrapper
      */
     public function prePackage(PackageEvent $event)
     {
-
         $packages = $this->getPackagesFromEvent($event);
         $paths = $this->getInstallPathsFromPackages($packages);
 
@@ -101,22 +96,23 @@ class PluginWrapper
      * provide the path the package will be installed to.
      *
      * @param \Composer\Installer\PackageEvent $event
-     * @return \Composer\Package\PackageInterface[]
+     *
      * @throws \Exception
+     *
+     * @return \Composer\Package\PackageInterface[]
      */
     protected function getPackagesFromEvent(PackageEvent $event)
     {
-
         $operation = $event->getOperation();
         if ($operation instanceof InstallOperation) {
-            $packages = array($operation->getPackage());
+            $packages = [$operation->getPackage()];
         } elseif ($operation instanceof UpdateOperation) {
-            $packages = array(
-            $operation->getInitialPackage(),
-            $operation->getTargetPackage(),
-            );
+            $packages = [
+                $operation->getInitialPackage(),
+                $operation->getTargetPackage(),
+            ];
         } elseif ($operation instanceof UninstallOperation) {
-            $packages = array($operation->getPackage());
+            $packages = [$operation->getPackage()];
         }
 
         return $packages;
@@ -134,7 +130,7 @@ class PluginWrapper
         /** @var \Composer\Installer\InstallationManager $installationManager */
         $installationManager = $this->composer->getInstallationManager();
 
-        $paths = array();
+        $paths = [];
         foreach ($packages as $package) {
             $paths[] = $installationManager->getInstallPath($package);
         }
@@ -151,7 +147,7 @@ class PluginWrapper
      */
     protected function getUniqueNameFromPackages(array $packages)
     {
-        $return = array();
+        $return = [];
         foreach ($packages as $package) {
             $return[] = $package->getUniqueName();
         }
@@ -172,7 +168,7 @@ class PluginWrapper
         if (!isset($extra['preserve-paths'])) {
             $paths = $extra['preserve-paths'];
         } elseif (!is_array($extra['preserve-paths']) && !is_object($extra['preserve-paths'])) {
-            $paths = array($extra['preserve-paths']);
+            $paths = [$extra['preserve-paths']];
         } else {
             $paths = array_values((array) $extra['preserve-paths']);
         }
@@ -184,11 +180,12 @@ class PluginWrapper
      * Helper to convert relative paths to absolute ones.
      *
      * @param string[] $paths
+     *
      * @return string[]
      */
     protected function absolutePaths($paths)
     {
-        $return = array();
+        $return = [];
         foreach ($paths as $path) {
             if (!$this->filesystem->isAbsolutePath($path)) {
                 $path = getcwd().'/'.$path;

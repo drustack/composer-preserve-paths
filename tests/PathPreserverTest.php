@@ -1,32 +1,34 @@
 <?php
 
-namespace derhasi\Composer\Tests;
+namespace DruStack\Composer\PreservePaths\Tests;
 
-use derhasi\Composer\PathPreserver;
+use DruStack\Composer\PreservePaths\PathPreserver;
 use Composer\Util\Filesystem;
-use Composer\Package\Package;
-use Composer\Package\RootPackage;
 use Composer\Composer;
-use Composer\Config;
-use derhasi\tempdirectory\TempDirectory;
 
-/**
- * Test for path preserver functionality.
- */
 class PathPreserverTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \DruStack\Composer\PreservePaths\Tests\TempDirectory
+     */
+    private $workingDirectory;
 
     /**
-     * set up test environmemt
+     * @var \DruStack\Composer\PreservePaths\Tests\TempDirectory
+     */
+    private $cacheDirectory;
+
+    /**
+     * set up test environmemt.
      */
     public function setUp()
     {
         $this->fs = new Filesystem();
-        $this->io = $this->getMock('Composer\IO\IOInterface');
+        $this->io = $this->createMock('Composer\IO\IOInterface');
     }
 
     /**
-     * Tests that the directory is created
+     * Tests that the directory is created.
      */
     public function testPreserveAndRollback()
     {
@@ -40,14 +42,14 @@ class PathPreserverTest extends \PHPUnit_Framework_TestCase
         file_put_contents($file1, 'Test content');
 
         // We simulate creation of
-        $installPaths = array(
+        $installPaths = [
             $workingDirectory->getRoot(),
-        );
+        ];
 
-        $preservePaths = array(
+        $preservePaths = [
             $folder1,
             $file1,
-        );
+        ];
 
         $preserver = new PathPreserver($installPaths, $preservePaths, $cacheDirectory->getRoot(), $this->fs, $this->io);
         $this->assertIsDir($folder1, 'Folder created.');
@@ -128,14 +130,14 @@ class PathPreserverTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($file1, 'File 1 created.');
         $this->assertFileExists($file2, 'File 2 created.');
 
-        $installPaths = array(
+        $installPaths = [
             $folder1,
-        );
-        $preservePaths = array(
+        ];
+        $preservePaths = [
             $subfolder1,
             $file1,
             $file2,
-        );
+        ];
 
         $preserver = new PathPreserver($installPaths, $preservePaths, $cacheDirectory->getRoot(), $this->fs, $this->io);
 
