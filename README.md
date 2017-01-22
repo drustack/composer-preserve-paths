@@ -1,6 +1,12 @@
 Composer Preserve Paths
 =======================
 
+[![Build Status](https://travis-ci.org/drustack/composer-preserve-paths.svg?branch=7.x)](https://travis-ci.org/drustack/composer-preserve-paths)
+[![Coverage Status](https://coveralls.io/repos/drustack/composer-preserve-paths/badge.svg?branch=master&service=github)](https://coveralls.io/github/drustack/composer-preserve-paths?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/drustack/composer-preserve-paths/v/stable.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
+[![Total Downloads](https://poser.pugx.org/drustack/composer-preserve-paths/downloads.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
+[![License](https://poser.pugx.org/drustack/composer-preserve-paths/license.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
+
 Composer plugin for preserving paths while installing, updating or uninstalling packages.
 
 This way you can:
@@ -74,3 +80,17 @@ An example composer.json using [composer/installers](https://packagist.org/packa
             ]
         }
     }
+
+License
+-------
+
+-   Code released under [GPL-2.0+](https://github.com/drustack/composer-preserve-paths/blob/master/LICENSE)
+-   Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+
+Author Information
+------------------
+
+-   Wong Hoi Sing Edison
+    -   <https://twitter.com/hswong3i>
+    -   <https://github.com/hswong3i>
+
