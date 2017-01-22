@@ -1,7 +1,7 @@
 Composer Preserve Paths
 =======================
 
-[![Build Status](https://travis-ci.org/drustack/composer-preserve-paths.svg?branch=7.x)](https://travis-ci.org/drustack/composer-preserve-paths)
+[![Build Status](https://travis-ci.org/drustack/composer-preserve-paths.svg?branch=master)](https://travis-ci.org/drustack/composer-preserve-paths)
 [![Coverage Status](https://coveralls.io/repos/drustack/composer-preserve-paths/badge.svg?branch=master&service=github)](https://coveralls.io/github/drustack/composer-preserve-paths?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/drustack/composer-preserve-paths/v/stable.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
 [![Total Downloads](https://poser.pugx.org/drustack/composer-preserve-paths/downloads.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
