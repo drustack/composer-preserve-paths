@@ -1,39 +1,57 @@
 {
-  "name": "derhasi/composer-preserve-paths",
-  "description": "Composer plugin for preserving custom paths and supporting nested packages",
-  "type": "composer-plugin",
-  "keywords": [
-    "composer-plugin",
-    "installer",
-    "custom path",
-    "nested package"
-  ],
-  "homepage": "https://github.com/derhasi/composer-preserve-paths",
-  "license": "GPL-2.0+",
-  "authors": [
-    {
-      "name": "Johannes Haseitl",
-      "email": "johannes@undpaul.de",
-      "homepage": "http://www.undpaul.de"
-    }
-  ],
-  "support": {
-    "issues": "https://github.com/derhasi/composer-preserve-paths/issues"
-  },
-  "require": {
-    "composer-plugin-api": "^1.0"
-  },
-  "require-dev": {
-    "composer/composer": "1.0.*@dev",
-    "phpunit/phpunit": "4.4.*",
-    "derhasi/tempdirectory": "0.1.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "derhasi\\Composer\\": "src/"
-    }
-  },
-  "extra": {
-    "class": "derhasi\\Composer\\Plugin"
-  }
+    "authors": [
+        {
+            "email": "johannes@undpaul.de",
+            "homepage": "http://www.undpaul.de",
+            "name": "Johannes Haseitl"
+        },
+        {
+            "email": "deminy@deminy.net",
+            "homepage": "http://deminy.net",
+            "name": "Demin Yin"
+        },
+        {
+            "email": "hswong3i@pantarei-design.com",
+            "homepage": "http://hswong3i.net",
+            "name": "Wong Hoi Sing Edison"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DruStack\\Composer\\PreservePaths\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DruStack\\Composer\\PreservePaths\\Tests\\": "tests/"
+        }
+    },
+    "description": "Composer plugin for preserving custom paths and supporting nested packages",
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "1.x-dev",
+            "dev-master": "1.0.x-dev"
+        },
+        "class": "DruStack\\Composer\\PreservePaths\\Plugin"
+    },
+    "keywords": [
+        "composer-plugin",
+        "installer",
+        "custom path",
+        "nested package"
+    ],
+    "license": "GPL-2.0+",
+    "name": "drustack/composer-preserve-paths",
+    "require": {
+        "composer-plugin-api": "~1.0"
+    },
+    "require-dev": {
+        "composer/composer": "~1.0"
+    },
+    "scripts": {
+        "coveralls": "coveralls -v; exit 0",
+        "php-cs-fixer": "php-cs-fixer fix; exit 0",
+        "phpunit": "phpunit -c phpunit.xml.dist; exit 0"
+    },
+    "type": "composer-plugin"
 }
