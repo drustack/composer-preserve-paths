@@ -5,8 +5,9 @@ namespace DruStack\Composer\PreservePaths\Tests;
 use DruStack\Composer\PreservePaths\PathPreserver;
 use Composer\Util\Filesystem;
 use Composer\Composer;
+use PHPUnit\Framework\TestCase;
 
-class PathPreserverTest extends \PHPUnit_Framework_TestCase
+class PathPreserverTest extends TestCase
 {
     /**
      * @var \DruStack\Composer\PreservePaths\Tests\TempDirectory

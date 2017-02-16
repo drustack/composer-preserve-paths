@@ -83,31 +83,31 @@ class PathPreserver
             $installPathNormalized = $this->filesystem->normalizePath($installPath);
 
             // Check if any path may be affected by modifying the install path.
-            $relevant_paths = [];
+            $relevantPaths = [];
             foreach ($this->preservePaths as $path) {
                 $normalizedPath = $this->filesystem->normalizePath($path);
-                if (static::file_exists($path) && strpos($normalizedPath, $installPathNormalized) === 0) {
-                    $relevant_paths[] = $normalizedPath;
+                if (static::fileExists($path) && strpos($normalizedPath, $installPathNormalized) === 0) {
+                    $relevantPaths[] = $normalizedPath;
                 }
             }
 
             // If no paths need to be backed up, we simply proceed.
-            if (empty($relevant_paths)) {
+            if (empty($relevantPaths)) {
                 continue;
             }
 
             $unique = $installPath.' '.time();
-            $cache_root = $this->filesystem->normalizePath($this->cacheDir.'/preserve-paths/'.sha1($unique));
-            $this->filesystem->ensureDirectoryExists($cache_root);
+            $cacheRoot = $this->filesystem->normalizePath($this->cacheDir.'/preserve-paths/'.sha1($unique));
+            $this->filesystem->ensureDirectoryExists($cacheRoot);
 
             // Before we back paths up, we need to make sure, permissions are
             // sufficient to that task.
-            $this->preparePathPermissions($relevant_paths);
+            $this->preparePathPermissions($relevantPaths);
 
-            foreach ($relevant_paths as $original) {
-                $backup_location = $cache_root.'/'.sha1($original);
-                $this->filesystem->rename($original, $backup_location);
-                $this->backups[$original] = $backup_location;
+            foreach ($relevantPaths as $original) {
+                $backupLocation = $cacheRoot.'/'.sha1($original);
+                $this->filesystem->rename($original, $backupLocation);
+                $this->backups[$original] = $backupLocation;
             }
         }
     }
@@ -123,10 +123,10 @@ class PathPreserver
             return;
         }
 
-        foreach ($this->backups as $original => $backup_location) {
+        foreach ($this->backups as $original => $backupLocation) {
             // Remove any code that was placed by the package at the place of
             // the original path.
-            if (static::file_exists($original)) {
+            if (static::fileExists($original)) {
                 if (is_dir($original)) {
                     $this->filesystem->emptyDirectory($original, false);
                     $this->filesystem->removeDirectory($original);
@@ -141,10 +141,10 @@ class PathPreserver
             $this->filesystem->ensureDirectoryExists($folder);
             // Make sure we can write the file to the folder.
             $this->makePathWritable($folder);
-            $this->filesystem->rename($backup_location, $original);
+            $this->filesystem->rename($backupLocation, $original);
 
-            if ($this->filesystem->isDirEmpty(dirname($backup_location))) {
-                $this->filesystem->removeDirectory(dirname($backup_location));
+            if ($this->filesystem->isDirEmpty(dirname($backupLocation))) {
+                $this->filesystem->removeDirectory(dirname($backupLocation));
             }
         }
 
@@ -171,14 +171,14 @@ class PathPreserver
      *
      * @see file_exists()
      */
-    public static function file_exists($path)
+    public static function fileExists($path)
     {
         // Get all parent directories.
         $folders = [];
-        $reset_perms = [];
+        $resetPerms = [];
         $folder = $path;
         while ($folder = dirname($folder)) {
-            if ($folder === '.' || $folder === '/' || preg_match('/^.:\\\$/', $folder)) {
+            if ($folder === '.' || $folder === '/' || preg_match('/^.:\\\\$/', $folder)) {
                 break;
             } elseif ($folder === '') {
                 continue;
@@ -186,17 +186,17 @@ class PathPreserver
             $folders[] = $folder;
         }
 
-        foreach (array_reverse($folders) as $current_folder) {
+        foreach (array_reverse($folders) as $currentFolder) {
             // In the case a parent folder does not exist, the file cannot exist.
-            if (!is_dir($current_folder)) {
+            if (!is_dir($currentFolder)) {
                 $return = false;
                 break;
             }
             // In the case the folder is really a folder, but not executable, we need
             // to change that, so we can check if the file really exists.
-            elseif (!is_executable($current_folder)) {
-                $reset_perms[$current_folder] = fileperms($current_folder);
-                chmod($current_folder, 0755);
+            elseif (!is_executable($currentFolder)) {
+                $resetPerms[$currentFolder] = fileperms($currentFolder);
+                chmod($currentFolder, 0755);
             }
         }
 
@@ -205,7 +205,7 @@ class PathPreserver
         }
 
         // Reset permissions in reverse order.
-        foreach (array_reverse($reset_perms, true) as $folder => $mode) {
+        foreach (array_reverse($resetPerms, true) as $folder => $mode) {
             chmod($folder, $mode);
         }
 
