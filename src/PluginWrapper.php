@@ -40,9 +40,6 @@ class PluginWrapper
      */
     protected $preservers;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(Composer $composer, IOInterface $io)
     {
         $this->io = $io;

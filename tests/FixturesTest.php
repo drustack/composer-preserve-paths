@@ -1,15 +1,14 @@
 <?php
 
-namespace derhasi\Composer\Tests;
+namespace DruStack\Composer\PreservePaths\Tests;
 
-use derhasi\tempdirectory\TempDirectory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for some examples.
  */
-class FixturesTest extends \PHPUnit_Framework_TestCase
+class FixturesTest extends TestCase
 {
-
     /**
      * @var string
      */
@@ -39,15 +38,15 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
      * Test provided fixtures.
      *
      * @param string $folder
-     *   Name of the folder of the fixture
+     *                         Name of the folder of the fixture
      * @param array  $commands
-     *   Array of composer commands to process
+     *                         Array of composer commands to process
      * @param array  $files
-     *   Array of files to check for existance
+     *                         Array of files to check for existance
      *
      * @dataProvider fixturesProvider
      */
-    public function testFixtures($folder, $commands = array(), $files = array())
+    public function testFixtures($folder, $commands = [], $files = [])
     {
         $workingDirectory = new TempDirectory(__METHOD__.$folder);
 
@@ -57,7 +56,7 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
         // Add this project as local development repository sow we work with
         // the latest code.
         $this->composer('config', 'repositories.dev', 'path', $this->projectRoot);
-        
+
         $output = $this->composer('install');
 
         // Check for deprecation notices.
@@ -65,14 +64,14 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
 
         // Run additional composer commands.
         foreach ($commands as $command) {
-            call_user_func_array(array($this, 'composer'), $command);
+            call_user_func_array([$this, 'composer'], $command);
         }
-        
+
         // Check for file existance.
         foreach ($files as $file) {
             $this->assertFileExists($file);
         }
-        
+
         unset($workingDirectory);
     }
 
@@ -83,18 +82,18 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
      */
     public function fixturesProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'example',
                 // Update drupal/drupal to the newest release
-                array(
-                    array('update', 'drupal/drupal'),
-                ),
-                array( 'web/index.php', 'web/sites/all/modules/contrib/views/views.module'),
-            ),
-        );
+                [
+                    ['update', 'drupal/drupal'],
+                ],
+                ['web/index.php', 'web/sites/all/modules/contrib/views/views.module'],
+            ],
+        ];
     }
-    
+
     /**
      * Run composer command.
      *
@@ -102,7 +101,7 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
      * @param string $arg,... Optional arguments
      *
      * @return string[]
-     *   Array of output lines by the composer command.
+     *                  Array of output lines by the composer command
      */
     protected function composer($command)
     {
@@ -116,7 +115,7 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $output = array();
+        $output = [];
         $returnCode = null;
         exec("$exec 2>&1", $output, $returnCode);
 
@@ -129,6 +128,7 @@ class FixturesTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check lines for not having any deprecation notice.
+     *
      * @param string[] $lines
      */
     protected function assertDeprecationNotice($lines)
