@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains DruStack\Composer\Plugin.
+ * Contains DruStack\Composer\PreservePaths\Plugin.
  */
 
 namespace DruStack\Composer\PreservePaths;

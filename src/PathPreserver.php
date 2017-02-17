@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Contains \DruStack\Composer\PathPreserver.
+ * Contains \DruStack\Composer\PreservePaths\PathPreserver.
  */
 
 namespace DruStack\Composer\PreservePaths;
