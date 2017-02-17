@@ -64,8 +64,14 @@ An example composer.json using [composer/installers](https://packagist.org/packa
                 "web/sites/all/modules/contrib/{$name}/": [
                     "type:drupal-module"
                 ],
+                "web/sites/all/modules/custom/{$name}/": [
+                    "type:drupal-custom-module"
+                ],
                 "web/sites/all/themes/contrib/{$name}/": [
                     "type:drupal-theme"
+                ],
+                "web/sites/all/themes/custom/{$name}/": [
+                    "type:drupal-custom-theme"
                 ]
             },
             "preserve-paths": [
