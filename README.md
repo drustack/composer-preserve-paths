@@ -7,12 +7,12 @@ Composer Preserve Paths
 [![Total Downloads](https://poser.pugx.org/drustack/composer-preserve-paths/downloads.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
 [![License](https://poser.pugx.org/drustack/composer-preserve-paths/license.svg)](https://packagist.org/packages/drustack/composer-preserve-paths)
 
-Composer plugin for preserving paths while installing, updating or uninstalling packages.
+Composer plugin for preserving custom paths and supporting nested packages.
 
 This way you can:
 
--   provide custom files or directories that will not be overwritten on `composer install` or `composer update`
--   place packages within the directory of another package (using a composer installer like
+-   Provide custom files or directories that will not be overwritten on `composer install` or `composer update`
+-   Place packages within the directory of another package (using a composer installer like
     [composer/installers](https://packagist.org/packages/composer/installers))
 
 Installation
