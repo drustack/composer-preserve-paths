@@ -7,12 +7,12 @@ dist: trusty
 language: php
 
 before_install:
-  - env | grep PATH
   - sh -c "if [ $TRAVIS_PHP_VERSION != hhvm ]; then echo 'sendmail_path = /bin/true' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi"
   - composer self-update
   - composer global require --no-update hirak/prestissimo:@stable
   - composer global update
   - export PATH="$PATH:$HOME/.composer/vendor/bin"
+  - mkdir -p ~/bin
   - curl -sL https://phar.phpunit.de/phpunit-5.7.phar > ~/bin/phpunit
   - chmod 755 ~/bin/phpunit
   - curl -sL https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar > ~/bin/coveralls
