@@ -18,7 +18,9 @@ This way you can:
 Installation
 ------------
 
-Simply install the plugin with composer: `composer require drustack/composer-preserve-paths`
+Simply install the plugin with composer:
+
+    $ composer require drustack/composer-preserve-paths:~1.0
 
 Configuration
 -------------
@@ -91,7 +93,7 @@ An example composer.json using [composer/installers](https://packagist.org/packa
         ],
         "require": {
             "composer/installers": "~1.0",
-            "drupal/drupal": "~7.53",
+            "drupal/drupal": "~7.54",
             "drupal/views": "3.x-dev",
             "drustack/composer-preserve-paths": "~1.0"
         }
